@@ -1,0 +1,29 @@
+﻿/* ConnectionConfig.cs
+ * This class specifies the database settings.
+ * 
+ * Copyright (c) 2018-2019 MAL Updater OS X Group, a division of Moy IT Solutions
+ * Licensed under Apache License 2.0
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace hato.Helpers
+{
+    public class ConnectionConfig
+    {
+        // Specify database settings
+        // Note: You should execute setupschema.sql before setting up this script.
+        private const String mysqlserver = "localhost";
+		private const String mysqldatabase = "hato";
+		private const String mysqlusername = "hato";
+		private const String mysqlpassword = "";
+
+        // Do not modify anything below this line.
+		public static String connectionstring ()
+		{
+			return "SERVER =" + mysqlserver + ";DATABASE=" + mysqldatabase + ";UID=" + mysqlusername + ";PASSWORD=" + mysqlpassword + ";";
+		}
+    }
+}

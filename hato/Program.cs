@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Program.cs
+ * 
+ * Copyright (c) 2018-2019 MAL Updater OS X Group, a division of Moy IT Solutions
+ * Licensed under Apache License 2.0
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +24,7 @@ namespace hato
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://localhost:50420")
                 .UseStartup<Startup>();
     }
 }
