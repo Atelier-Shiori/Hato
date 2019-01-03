@@ -19,7 +19,7 @@ GET http://localhost:50420/api/mappings/(service)/(media type)/(id)
 
 | Parameter | Value | Required |
 |:---|:---|:---|
-| service | `mal` or `kitsu` or `anilist` | `true` |
+| service | `mal` or `kitsu` or `anilist` (Anime only: `anidb` or `notify`)| `true` |
 | media type | MediaType (`anime` or `manga`) | `true` |
 | id | number | `true` |
 
