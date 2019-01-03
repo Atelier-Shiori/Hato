@@ -27,7 +27,7 @@ namespace hato.Controllers
             int AniListID = 0, MALID = 0, KitsuID = 0;
             Service currentservice;
             MediaType currenttype;
-            TitleIDConverter converter = new TitleIDConverter();
+			TitleIDConverter converter = new TitleIDConverter();
             if (converter.sqlliteinitalized) {
                 switch (type)
                 {
@@ -38,6 +38,7 @@ namespace hato.Controllers
                         currenttype = MediaType.Manga;
                         break;
                     default:
+						converter.Dispose();
                         Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Invalid media type. Type must be anime or manga." } };
                         return BadRequest(erroroutput);
 
@@ -57,6 +58,7 @@ namespace hato.Controllers
                         currentservice = Service.Kitsu;
                         break;
                     default:
+						converter.Dispose();
                         Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Invalid service. Services accepted are anilist, kitsu, and mal" } };
                         return BadRequest(erroroutput);
                 }
@@ -97,11 +99,13 @@ namespace hato.Controllers
                     }
                     if (notfound)
                     {
+						converter.Dispose();
                         Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Nothing found for " + service + " title id: " + id.ToString() } };
                         return NotFound(erroroutput);
                     }
                     else
                     {
+						converter.Dispose();
                         Dictionary<string, object> titleidlist = new Dictionary<string, object> { { "anilist_id", AniListID }, { "kitsu_id", KitsuID }, { "mal_id", MALID }, { "type", currenttype }, { "type_str", type } };
                         return Ok(new Dictionary<string, object> { { "data", titleidlist } });
                     }
@@ -112,6 +116,7 @@ namespace hato.Controllers
                     return BadRequest(erroroutput);
                 }
             }
+			converter.Dispose();
             Dictionary<string, object> eoutput = new Dictionary<string, object> { { "data", null }, { "error", "Can't connect to database." } };
             return BadRequest(eoutput);
         }
