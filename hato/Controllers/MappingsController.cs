@@ -102,7 +102,7 @@ namespace hato.Controllers
                     }
                     else
                     {
-                        Dictionary<string, int> titleidlist = new Dictionary<string, int> { { "anilist_id", AniListID }, { "kitsu_id", KitsuID }, { "mal_id", MALID } };
+                        Dictionary<string, object> titleidlist = new Dictionary<string, object> { { "anilist_id", AniListID }, { "kitsu_id", KitsuID }, { "mal_id", MALID }, { "type", currenttype }, { "type_str", type } };
                         return Ok(new Dictionary<string, object> { { "data", titleidlist } });
                     }
                 }

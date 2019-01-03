@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Hato</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <script type="text/javascript">
+        function getIDs() {
+            var inputtitleid = document.getElementById("titleid").value;
+            var serviceid = document.getElementById("service").value;
+            var typeid = document.getElementById("type").value;
+
+            var servicename = "";
+            var typename = "";
+            switch (serviceid) {
+                case "1":
+                    servicename = "anilist";
+                    break;
+                case "2":
+                    servicename = "kitsu";
+                    break;
+                case "3":
+                    servicename = "mal";
+                    break;
+                default:
+                    break;
+            }
+
+            switch (typeid) {
+                case "1":
+                    typename = "anime";
+                    break;
+                case "2":
+                    typename = "manga";
+                    break;
+                default:
+                    break;
+            }
+
+            if (inputtitleid.length == 0) {
+                alert("You must input a title id.");
+            }
+            else {
+                var getUrl = window.location;
+                var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+                var apiurl = baseUrl.concat("api/mappings/", servicename, "/", typename, "/", inputtitleid);
+
+                // Create a request variable and assign a new XMLHttpRequest object to it.
+                var request = new XMLHttpRequest();
+
+                // Open a new connection, using the GET request on the URL endpoint
+                request.open('GET', apiurl, true);
+
+                request.onload = function () {
+                    // Begin accessing JSON data here
+                    var data = JSON.parse(this.response);
+                    document.getElementById("apiresults").innerHTML = "";
+                    var apiresults = document.getElementById("apiresults");
+                    if (request.status >= 200 && request.status < 400) {
+                        var ul = document.createElement('ul');
+                        // AniList
+                        var AniListLi = document.createElement('li');
+                        AniListLi.innerHTML = "AniList: <a href='https://anilist.co/" + typename + "/" + data.data.anilist_id + "'>" + data.data.anilist_id + "</a>";
+                        ul.appendChild(AniListLi);
+                        // Mal
+                        var MalLi = document.createElement('li');
+                        MalLi.innerHTML = "MyAnimeList: <a href='https://myanimelist.net/" + typename + "/" + data.data.mal_id + "'>" + data.data.mal_id + "</a>";
+                        ul.appendChild(MalLi);
+                        // Kitsu
+                        var KitsuLi = document.createElement('li');
+                        KitsuLi.innerHTML = "Kitsu: <a href='https://kitsu.io/" + typename + "/" + data.data.anilist_id + "'>" + data.data.kitsu_id + "</a>";
+                        ul.appendChild(KitsuLi);
+                        apiresults.appendChild(ul);
+                    }
+                    else {
+                        apiresults.innerHTML = 'Not Found';
+                    }
+                }
+
+                // Send request
+                request.send();
+
+            }
+
+        }
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Hato</h1>
+            <p>Anime/Manga Title ID Relations JSON API written in C# (ASP.NET Core)</p>
+            <p class="view"><a href="https://github.com/Atelier-Shiori/Hato">View the Project on GitHub <small>Atelier-Shiori/Hato</small></a></p>
+            <ul>
+                <li><a href="https://github.com/Atelier-Shiori/Hato/archive/master.zip">Download <strong>ZIP File</strong></a></li>
+                <li><a href="https://github.com/Atelier-Shiori/Hato">View On <strong>GitHub</strong></a></li>
+            </ul>
+        </header>
+        <section>
+            <p>Hato is a REST API built on ASP.NET Core and written in C#. It allows developers to easily look up title identifiers for a certain title on different listing services to increase interoperability for things like exporting lists, list syncing and updating entries on different services of the same title. The mappings are stored in a database so that title id mappings can be retrieved without a lookup.</p>
+            <h1>Supported Services</h1>
+            <p>Currently, Hato supports conversion of title ids of the following:</p>
+            <ul>
+                <li>AniList (Anime/Manga)</li>
+                <li>Kitsu (Anime/Manga)</li>
+                <li>MyAnimeList (Anime/Manga)</li>
+            </ul>
+            <p>Coming Soon:</p>
+            <ul>
+                <li>Notify.moe (Anime)</li>
+                <li>AniDB (Anime)</li>
+            </ul>
+
+            <h2>Support us</h2>
+            <p>Currently, this is a free service, but it will be only available for active Patrons once it leaves Beta. You can support this project and others (Hachidori and Shukofukurou) by becoming a Patreon.</p>
+            <p><a href="https://www.patreon.com/bePatron?u=4748653" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+            <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script></p></p>
+            <h2>Try it Out</h2>
+            <p>
+
+                <!-- Form Name -->
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="titleid">Title Id</label>
+                    <div class="col-md-4">
+                        <input id="titleid" name="titleid" type="text" placeholder="" class="form-control input-md">
+
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="service">Service</label>
+                    <div class="col-md-4">
+                        <select id="service" name="service" class="form-control">
+                            <option value="1">AniList</option>
+                            <option value="2">Kitsu</option>
+                            <option value="3">MyAnimeList</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="type">Type</label>
+                    <div class="col-md-4">
+                        <select id="type" name="type" class="form-control">
+                            <option value="1">Anime</option>
+                            <option value="2">Manga</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="submit"></label>
+                    <div class="col-md-4">
+                        <button onclick="getIDs()">Lookup</button>
+                    </div>
+                </div>
+            </p>
+            <p id="apiresults"></p>
+            <h1>How to Use</h1>
+            <h2>Endpoints</h2>
+            <pre><code>GET http://localhost:50420/api/mappings/(service)/(media type)/(id)
+		</code></pre>
+            <h3>Parameters</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">Parameter</th>
+                        <th align="left">Value</th>
+                        <th align="left">Required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="left">service</td>
+                        <td align="left"><code>mal</code> or <code>kitsu</code> or <code>anilist</code></td>
+                        <td align="left"><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td align="left">media type</td>
+                        <td align="left">MediaType (<code>anime</code> or <code>manga</code>)</td>
+                        <td align="left"><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td align="left">id</td>
+                        <td align="left">number</td>
+                        <td align="left"><code>true</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Example</h3>
+            <pre><code>[GET] http://localhost:50420/api/mappings/kitsu/anime/11134
+		</code></pre>
+            <h4>Response</h4>
+            <pre><code>
+    {"data":{"anilist_id":21238,"kitsu_id":11134,"mal_id":31080,"type":0,"type_str":"anime"}}
+</code></pre>
+            <h1>License</h1>
+            <p>Hato is licensed under Apache License 2.0.ß</p>
+        </section>
+    </div>
+    <footer>
+        <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
