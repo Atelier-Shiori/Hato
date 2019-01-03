@@ -21,104 +21,39 @@ namespace hato.Controllers
     {
 
         // GET api/mappings/(service)/(type)/(id)
-        [HttpGet("{service}/{type}/{id:int}")]
-        public ActionResult<JsonResult> Get(string service, string type, int id)
+        [HttpGet("{service}/{type}/{id}")]
+        public ActionResult<JsonResult> Get(string service, string type, string id)
         {
-            int AniListID = 0, MALID = 0, KitsuID = 0;
-            Service currentservice;
-            MediaType currenttype;
-			TitleIDConverter converter = new TitleIDConverter();
-            if (converter.sqlliteinitalized) {
-                switch (type)
+            TitleIdMapping mapping = new TitleIdMapping(service, type, id);
+            if (!mapping.errored)
+            {
+                mapping.performLookup();
+                if (mapping.errored)
                 {
-                    case "anime":
-                        currenttype = MediaType.Anime;
-                        break;
-                    case "manga":
-                        currenttype = MediaType.Manga;
-                        break;
-                    default:
-						converter.Dispose();
-                        Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Invalid media type. Type must be anime or manga." } };
-                        return BadRequest(erroroutput);
-
+                    BadRequestObjectResult result = BadRequest(mapping.output);
+                    mapping.Dispose();
+                    return result;
                 }
-                switch (service)
+                else if (mapping.notfound)
                 {
-                    case "anilist":
-                        AniListID = id;
-                        currentservice = Service.AniList;
-                        break;
-                    case "mal":
-                        MALID = id;
-                        currentservice = Service.MyAnimeList;
-                        break;
-                    case "kitsu":
-                        KitsuID = id;
-                        currentservice = Service.Kitsu;
-                        break;
-                    default:
-						converter.Dispose();
-                        Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Invalid service. Services accepted are anilist, kitsu, and mal" } };
-                        return BadRequest(erroroutput);
-                }
-                if (id > 0)
-                {
-                    bool notfound = false;
-                    switch (currentservice)
-                    {
-                        case Service.AniList:
-                            MALID = converter.GetMALIDFromAniListID(AniListID, currenttype);
-                            if (MALID > 0) {
-                                KitsuID = converter.GetKitsuIDFromMALID(MALID, currenttype);
-                            }
-                            else
-                            {
-                                notfound = true;
-                            }
-                            break;
-                        case Service.MyAnimeList:
-                            AniListID = converter.GetAniListIDFromMALID(MALID, currenttype);
-                            KitsuID = converter.GetKitsuIDFromMALID(MALID, currenttype);
-                            if (AniListID < 1 && KitsuID < 1)
-                            {
-                                notfound = true;
-                            }
-                            break;
-                        case Service.Kitsu:
-                            MALID = converter.GetMALIDFromKitsuID(KitsuID, currenttype);
-                            if (MALID > 0)
-                            {
-                                AniListID = converter.GetAniListIDFromMALID(MALID, currenttype);
-                            }
-                            else
-                            {
-                                notfound = true;
-                            }
-                            break;
-                    }
-                    if (notfound)
-                    {
-						converter.Dispose();
-                        Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Nothing found for " + service + " title id: " + id.ToString() } };
-                        return NotFound(erroroutput);
-                    }
-                    else
-                    {
-						converter.Dispose();
-                        Dictionary<string, object> titleidlist = new Dictionary<string, object> { { "anilist_id", AniListID }, { "kitsu_id", KitsuID }, { "mal_id", MALID }, { "type", currenttype }, { "type_str", type } };
-                        return Ok(new Dictionary<string, object> { { "data", titleidlist } });
-                    }
+                    NotFoundObjectResult result = NotFound(mapping.output);
+                    mapping.Dispose();
+                    return result;
                 }
                 else
                 {
-                    Dictionary<string, object> erroroutput = new Dictionary<string, object> { { "data", null }, { "error", "Id must be greater than 0." } };
-                    return BadRequest(erroroutput);
+                    OkObjectResult result = Ok(mapping.output);
+                    mapping.Dispose();
+                    return result;
                 }
             }
-			converter.Dispose();
-            Dictionary<string, object> eoutput = new Dictionary<string, object> { { "data", null }, { "error", "Can't connect to database." } };
-            return BadRequest(eoutput);
+            else
+            {
+                BadRequestObjectResult result = BadRequest(mapping.output);
+                mapping.Dispose();
+                return result;
+            }
+
         }
     }
 }

@@ -62,18 +62,55 @@
                     var apiresults = document.getElementById("apiresults");
                     if (request.status >= 200 && request.status < 400) {
                         var ul = document.createElement('ul');
+                        // AniDB
+                        if (typename == "anime") {
+                            var AniDBLi = document.createElement('li');
+                            if (data.data.anidb_id != null) {
+                                AniDBLi.innerHTML = "AniDB: <a href='https://anidb.net/perl-bin/animedb.pl?show=anime&aid=/" + data.data.anidb_id + "'>" + data.data.anidb_id + "</a>";
+                            }
+                            else {
+                                AniDBLi.innerHTML = "AniDB: Not Found";
+                            }
+                            ul.appendChild(AniDBLi);
+                        }
                         // AniList
                         var AniListLi = document.createElement('li');
-                        AniListLi.innerHTML = "AniList: <a href='https://anilist.co/" + typename + "/" + data.data.anilist_id + "'>" + data.data.anilist_id + "</a>";
+                        if (data.data.anilist_id != null) {
+                            AniListLi.innerHTML = "AniList: <a href='https://anilist.co/" + typename + "/" + data.data.anilist_id + "'>" + data.data.anilist_id + "</a>";
+                        }
+                        else {
+                            AniListLi.innerHTML = "AniList: Not Found";
+                        }
                         ul.appendChild(AniListLi);
-                        // Mal
-                        var MalLi = document.createElement('li');
-                        MalLi.innerHTML = "MyAnimeList: <a href='https://myanimelist.net/" + typename + "/" + data.data.mal_id + "'>" + data.data.mal_id + "</a>";
-                        ul.appendChild(MalLi);
                         // Kitsu
                         var KitsuLi = document.createElement('li');
-                        KitsuLi.innerHTML = "Kitsu: <a href='https://kitsu.io/" + typename + "/" + data.data.kitsu_id + "'>" + data.data.kitsu_id + "</a>";
+                        if (data.data.kitsu_id != null) {
+                            KitsuLi.innerHTML = "Kitsu: <a href='https://kitsu.io/" + typename + "/" + data.data.kitsu_id + "'>" + data.data.kitsu_id + "</a>";
+                        }
+                        else {
+                            KitsuLi.innerHTML = "Kitsu: Not Found";
+                        }
                         ul.appendChild(KitsuLi);
+                        // Mal
+                        var MalLi = document.createElement('li');
+                        if (data.data.mal_id != null) {
+                            MalLi.innerHTML = "MyAnimeList: <a href='https://myanimelist.net/" + typename + "/" + data.data.mal_id + "'>" + data.data.mal_id + "</a>";
+                        }
+                        else {
+                            MalLi.innerHTML = "MyAnimeList: Not Found";
+                        }
+                        ul.appendChild(MalLi);
+                        // Notify
+                        if (typename == "anime") {
+                            var NotifyLi = document.createElement('li');
+                            if (data.data.notify_id != null) {
+                                NotifyLi.innerHTML = "Notify: <a href='https://notify.moe/anime/" + data.data.notify_id + "'>" + data.data.notify_id + "</a>";
+                            }
+                            else {
+                                NotifyLi.innerHTML = "Notify: Not Found";
+                            }
+                            ul.appendChild(NotifyLi);
+                        }
                         apiresults.appendChild(ul);
                     }
                     else {

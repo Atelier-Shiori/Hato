@@ -60,7 +60,7 @@ namespace hato.Helpers
         
         public int GetMALIDFromKitsuID(int kitsuid, MediaType type)
         {
-            int titleid = this.RetreiveSavedTargetIDFromServiceID(Service.MyAnimeList,Service.Kitsu, kitsuid, type);
+            int titleid = (int)this.RetreiveSavedTargetIDFromServiceID(Service.MyAnimeList,Service.Kitsu, kitsuid, type);
             if (titleid > -1)
             {
                 return titleid;
@@ -113,7 +113,7 @@ namespace hato.Helpers
 
         public int GetKitsuIDFromMALID(int malid, MediaType type)
         {
-            int titleid = this.RetreiveSavedTargetIDFromServiceID(Service.Kitsu,Service.MyAnimeList,malid, type);
+            int titleid = (int)this.RetreiveSavedTargetIDFromServiceID(Service.Kitsu,Service.MyAnimeList,malid, type);
             if (titleid > -1)
             {
                 return titleid;
@@ -187,7 +187,7 @@ namespace hato.Helpers
 
         public int GetMALIDFromAniListID(int anilistid, MediaType type)
         {
-            int titleid = this.RetreiveSavedTargetIDFromServiceID(Service.MyAnimeList,Service.AniList, anilistid, type);
+            int titleid = (int)this.RetreiveSavedTargetIDFromServiceID(Service.MyAnimeList,Service.AniList, anilistid, type);
             if (titleid > -1)
             {
                 return titleid;
@@ -236,7 +236,7 @@ namespace hato.Helpers
 
         public int GetAniListIDFromMALID(int malid, MediaType type)
         {
-            int titleid = this.RetreiveSavedTargetIDFromServiceID(Service.AniList, Service.MyAnimeList, malid, type);
+            int titleid = (int)this.RetreiveSavedTargetIDFromServiceID(Service.AniList, Service.MyAnimeList, malid, type);
             if (titleid > -1)
             {
                 return titleid;
@@ -284,7 +284,7 @@ namespace hato.Helpers
 
         }
 
-        public int RetreiveSavedTargetIDFromServiceID(Service targetservice , Service listService, int titleid, MediaType type)
+        public object RetreiveSavedTargetIDFromServiceID(Service targetservice , Service listService, object titleid, MediaType type)
         {
             String sql = "";
             int mediatype = type == MediaType.Anime ? 0 : 1;
@@ -292,18 +292,18 @@ namespace hato.Helpers
             string sourceidname = retrieveServiceIDFieldName (listService);
             sql = "SELECT " + targetidname + " FROM titleids WHERE " + sourceidname + "= @param_val_1 AND mediatype = @param_val_2";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@param_val_1", titleid.ToString());
+            cmd.Parameters.AddWithValue("@param_val_1", titleid is int ? titleid.ToString() : titleid);
             cmd.Parameters.AddWithValue("@param_val_2", mediatype.GetHashCode());
             MySqlDataReader reader = cmd.ExecuteReader();
             bool isfound = false;
-            int foundtitleid = -1;
+            object foundtitleid = -1;
             try
             {
                 while (reader.Read() && !isfound)
                 {
                     if (reader[targetidname] != System.DBNull.Value)
                     {
-                        foundtitleid = (int)reader[targetidname];
+                        foundtitleid = reader[targetidname];
                         isfound = true;
                     }
                 }
@@ -315,19 +315,20 @@ namespace hato.Helpers
             return foundtitleid;
         }
 
-        public void SaveIDtoDatabase(Service targetservice, Service listservice, int targettitleid, int servicetitleid, MediaType type)
+        public void SaveIDtoDatabase(Service targetservice, Service listservice, object targettitleid, object servicetitleid, MediaType type)
         {
-           int idrecord = this.CheckIfEntryExists(listservice, servicetitleid, type);
-           if (idrecord > 0)
+           object idrecord = this.CheckIfEntryExists(listservice, servicetitleid, type);
+           bool validid = idrecord is int ? ((int)idrecord > 0) : (((string)idrecord).Length > 0);
+           if (validid)
            {
                 string targetidname = retrieveServiceIDFieldName(targetservice);
                 // Update entry
                String sql = "";
                int mediatype = type == MediaType.Anime ? 0 : 1;
                sql = "UPDATE titleids SET " + targetidname + " = @param_val_1 WHERE id = @param_val_2";
-               MySqlCommand cmd = new MySqlCommand(sql, connection);
-                cmd.Parameters.AddWithValue("@param_val_1", targettitleid.ToString());
-                cmd.Parameters.AddWithValue("@param_val_2", idrecord.ToString());
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@param_val_1", targettitleid is int ? targettitleid.ToString() : targettitleid);
+                cmd.Parameters.AddWithValue("@param_val_2", idrecord is int ? idrecord.ToString() : idrecord);
                 cmd.ExecuteNonQuery();
            }
            else
@@ -335,10 +336,9 @@ namespace hato.Helpers
                 // Insert entry
                 this.InsertIDtoDatabase(targetservice, listservice, targettitleid, servicetitleid, type);
             }
-
         }
 
-        private void InsertIDtoDatabase(Service targetservice, Service listservice, int targettitleid, int servicetitleid, MediaType type)
+        private void InsertIDtoDatabase(Service targetservice, Service listservice, object targettitleid, object servicetitleid, MediaType type)
         {
             string targetidname = retrieveServiceIDFieldName(targetservice);
             string sourceidname = retrieveServiceIDFieldName(listservice);
@@ -346,29 +346,29 @@ namespace hato.Helpers
             int mediatype = type == MediaType.Anime ? 0 : 1;
             sql = "INSERT INTO titleids (" + targetidname + "," + sourceidname + ",mediatype) VALUES (@param_val_1,@param_val_2,@param_val_3)";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@param_val_1", targettitleid.ToString());
-            cmd.Parameters.AddWithValue("@param_val_2", servicetitleid.ToString());
+            cmd.Parameters.AddWithValue("@param_val_1", targettitleid is int ? targettitleid.ToString() : targettitleid);
+            cmd.Parameters.AddWithValue("@param_val_2", servicetitleid is int ? servicetitleid.ToString() : servicetitleid);
             cmd.Parameters.AddWithValue("@param_val_3", mediatype.GetHashCode());
             cmd.ExecuteNonQuery();
         }
 
-        private int CheckIfEntryExists(Service targetservice, int targetid, MediaType type)
+        private object CheckIfEntryExists(Service targetservice, object targetid, MediaType type)
         {
             string targetidname = retrieveServiceIDFieldName(targetservice);
             int mediatype = type == MediaType.Anime ? 0 : 1;
             String sql = "SELECT id FROM titleids WHERE " + targetidname + " = @param_val_1 AND mediatype = @param_val_2";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@param_val_1", targetid.ToString());
+            cmd.Parameters.AddWithValue("@param_val_1", targetid is int ? targetid.ToString(): targetid);
             cmd.Parameters.AddWithValue("@param_val_2", mediatype.GetHashCode());
             MySqlDataReader reader = cmd.ExecuteReader();
             bool isfound = false;
-            int foundid = -1;
+            object foundid = -1;
             try
             {
                 while (reader.Read() && !isfound)
                 {
                     if (reader["id"] != System.DBNull.Value) { 
-                        foundid = (int)reader["id"];
+                        foundid = reader["id"];
                         isfound = true;
                     }
                 }
