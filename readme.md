@@ -6,8 +6,6 @@ Currently, Hato supports conversion of title ids of the following:
 * [AniList](https://anilist.co) (Anime/Manga)
 * [Kitsu](https://kitsu.io) (Anime/Manga)
 * [MyAnimeList](https://myanimelist.net) (Anime/Manga)
-
-Coming Soon:
 * Notify.moe (Anime)
 * AniDB (Anime)
 
@@ -34,9 +32,11 @@ GET http://localhost:50420/api/mappings/(service)/(media type)/(id)
 ```
 {
     "data":{
+        "anidb_id":11321,
         "anilist_id":21238,
         "kitsu_id":11134,
-        "mal_id":31080
+        "mal_id":31080,
+        "notify_id":"090XtKimg",
         "type" : 0,
         "type_str" : "anime"
     }
@@ -55,4 +55,4 @@ The instructions are in beta, to be changed in the future.
 * [Windows Service](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/windows-service?view=aspnetcore-2.2)
 
 # License
-Hato is licensed under Apache License 2.0.ß
+Hato is licensed under Apache License 2.0.

@@ -26,6 +26,12 @@
                 case "3":
                     servicename = "mal";
                     break;
+                case "4":
+                    servicename = "anidb";
+                    break;
+                case "5":
+                    servicename = "notify";
+                    break;
                 default:
                     break;
             }
@@ -66,7 +72,7 @@
                         if (typename == "anime") {
                             var AniDBLi = document.createElement('li');
                             if (data.data.anidb_id != null) {
-                                AniDBLi.innerHTML = "AniDB: <a href='https://anidb.net/perl-bin/animedb.pl?show=anime&aid=/" + data.data.anidb_id + "'>" + data.data.anidb_id + "</a>";
+                                AniDBLi.innerHTML = "AniDB: <a href='https://anidb.net/perl-bin/animedb.pl?show=anime&aid=" + data.data.anidb_id + "'>" + data.data.anidb_id + "</a>";
                             }
                             else {
                                 AniDBLi.innerHTML = "AniDB: Not Found";
@@ -151,9 +157,6 @@
                 <li>AniList (Anime/Manga)</li>
                 <li>Kitsu (Anime/Manga)</li>
                 <li>MyAnimeList (Anime/Manga)</li>
-            </ul>
-            <p>Coming Soon:</p>
-            <ul>
                 <li>Notify.moe (Anime)</li>
                 <li>AniDB (Anime)</li>
             </ul>
@@ -183,6 +186,8 @@
                             <option value="1">AniList</option>
                             <option value="2">Kitsu</option>
                             <option value="3">MyAnimeList</option>
+                            <option value="4">AniDB</option>
+                            <option value="5">Notify</option>
                         </select>
                     </div>
                 </div>
@@ -223,7 +228,7 @@
                 <tbody>
                     <tr>
                         <td align="left">service</td>
-                        <td align="left"><code>mal</code> or <code>kitsu</code> or <code>anilist</code></td>
+                        <td align="left"><code>mal</code> or <code>kitsu</code> or <code>anilist</code> (Anime Only: <code>anidb</code> or <code>notify</code>)</td>
                         <td align="left"><code>true</code></td>
                     </tr>
                     <tr>
@@ -246,7 +251,7 @@
     {"data":{"anilist_id":21238,"kitsu_id":11134,"mal_id":31080,"type":0,"type_str":"anime"}}
 </code></pre>
             <h1>License</h1>
-            <p>Hato is licensed under Apache License 2.0.ß</p>
+            <p>Hato is licensed under Apache License 2.0</p>
         </section>
     </div>
     <footer>
