@@ -94,6 +94,7 @@ namespace hato.Helpers
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     output = new Dictionary<string, object> { { "data", null }, { "error", "Invalid title id." } };
                     errored = true;
                 }

@@ -56,7 +56,7 @@ namespace hato.Helpers
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -114,6 +114,7 @@ namespace hato.Helpers
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine(e.Message);
                             }
                         }
                         if (myanimelistid > 0)
@@ -594,6 +595,7 @@ namespace hato.Helpers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 sqlliteinitalized = false;
             }
         }
