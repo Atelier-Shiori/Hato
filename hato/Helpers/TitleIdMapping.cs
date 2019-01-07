@@ -168,7 +168,7 @@ namespace hato.Helpers
                 }
                 if (notfound)
                 {
-                    output = new Dictionary<string, object> { { "data", null }, { "error", "Nothing found for " + servicename + " title id: " + lookupid is int ? lookupid.ToString() : lookupid } }; 
+                    output = new Dictionary<string, object> { { "data", null }, { "error", "Nothing found for " + lookupid.ToString() } }; 
                 }
                 else
                 {

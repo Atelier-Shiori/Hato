@@ -189,8 +189,8 @@ namespace hato.Helpers
                     if (existid > 0)
                     {
                         SaveIDtoDatabase(Service.NotifyMoe, listservice, "", titleid, MediaType.Anime);
-                        return "";
                     }
+                    return "";
                 }
             }
             return (string)notifyid;
@@ -529,7 +529,7 @@ namespace hato.Helpers
         {
             string targetidname = retrieveServiceIDFieldName(targetservice);
             int mediatype = type == MediaType.Anime ? 0 : 1;
-            String sql = "SELECT id FROM titleids WHERE " + targetidname + " = @param_val_1 AND mediatype = @param_val_3";
+            String sql = "SELECT id FROM titleids WHERE " + targetidname + " = @param_val_1 AND mediatype = @param_val_2";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@param_val_1", targetid is int ? targetid.ToString() : targetid);
             cmd.Parameters.AddWithValue("@param_val_2", mediatype.GetHashCode());
@@ -632,7 +632,7 @@ namespace hato.Helpers
                 case Service.Kitsu:
                     return "kitsu";
                 case Service.MyAnimeList:
-                    return "malid";
+                    return "mal";
                 default:
                     return "";
             }
