@@ -1,4 +1,5 @@
 CREATE DATABASE `hato` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `hato`;
 CREATE TABLE `apikeys` (
   `id` int(11) NOT NULL,
   `apikey` varchar(100) NOT NULL,

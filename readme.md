@@ -1,13 +1,18 @@
 # Hato
 Hato (鳩 lit. Pigeon) is a REST API built on ASP.NET Core and written in C#. It allows developers to easily look up title identifiers for a certain title and media type (Anime or Manga) on different listing services to increase interoperability for things like exporting lists, list syncing and updating entries on different services of the same title. The mappings are stored in a database so that title id mappings can be retrieved quickly without performing another lookup.
 
+# Why Hato over ARM (Anime Relations Mapper)
+1. It doesn't depend on one service - Besides using Notify to generate a title id mapping for anime, it uses Kitsu and AniList APIs to loook up title ids as a fallback, just in case if the title is not on Notify.
+2. Hato supports Manga mappings.
+3. With a database backend, Hato can easily retrieve existing mappings relatively quickly. Title ID mappings are very unlikely to change over time, except for media discovery services adding titles that didn't exist previously.
+
 # Supported Services
 Currently, Hato supports conversion of title ids of the following:
 * [AniList](https://anilist.co) (Anime/Manga)
 * [Kitsu](https://kitsu.io) (Anime/Manga)
 * [MyAnimeList](https://myanimelist.net) (Anime/Manga)
-* Notify.moe (Anime)
-* AniDB (Anime)
+* [Notify.moe](https://notify.moe) (Anime)
+* [AniDB](https://anidb.net) (Anime)
 
 # How to Use
 
