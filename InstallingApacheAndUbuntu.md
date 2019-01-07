@@ -55,6 +55,7 @@ GRANT INSERT ON hato.* TO ‘hato’@'localhost’;
 GRANT DELETE ON hato.* TO ‘hato’@'localhost’;
 GRANT SELECT ON hato.* TO ‘hato’@'localhost’;
 GRANT UPDATE ON hato.* TO ‘hato’@'localhost’;
+exit;
 ```
 
 ### Create the Database Configuration file
@@ -152,7 +153,7 @@ Go to your web browser and navigate to `http://(domain name)`. The domain dame i
 
 
 ## 7. Securing Hato (optional)
-It's recommended to use HTTPS to do any requests between your application and Hato. You can use the Let's Encrypt service to retrieve a free SSL certificate. You can do this by following [these instructions](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-16-04)
+It's recommended to use HTTPS to do any requests between your application and Hato. You can use the Let's Encrypt service to retrieve a free SSL certificate. You can do this by following [these instructions](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-16-04).
 
 # Updating Hato
 Hato recieves updates on a frequent basis. You can easily upgrade your copy of Hato by running the following commands:

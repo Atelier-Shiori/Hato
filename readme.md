@@ -55,8 +55,9 @@ The instructions are in beta, to be changed in the future.
 3. Navigate to the Hato > Helpers folder in the cloned repository. Rename ConnectionConfig-samplecs to ConnectionConfig.cs
 4. Open ConnectionConfig.cs and specify the database server, database name, database user and password.
 5. To deploy on your enviroment of choice, refer to these guides:
-* [Linux and Apache](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-apache?view=aspnetcore-2.2)
-* [Linux and Ngnix](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.2)
+* [Ubuntu and Apache](https://github.com/Atelier-Shiori/Hato/blob/master/InstallingApacheAndUbuntu.md)
+* [Red Hat Linux and Apache](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-apache?view=aspnetcore-2.2)
+* [Ubuntu Linux and Ngnix](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.2)
 * [Windows Service](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/windows-service?view=aspnetcore-2.2)
 
 # License
