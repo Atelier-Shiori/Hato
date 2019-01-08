@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using hato.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace hato.Controllers
 {
@@ -19,11 +20,20 @@ namespace hato.Controllers
     [ApiController]
     public class MappingsController : ControllerBase
     {
+        private readonly UserAgentControl allowedclients;
 
+        public MappingsController(IOptions<UserAgentControl> allowedclients)
+        {
+            this.allowedclients = allowedclients.Value;
+        }
         // GET api/mappings/(service)/(type)/(id)
         [HttpGet("{service}/{type}/{id}")]
         public ActionResult<JsonResult> Get(string service, string type, string id)
         {
+            if (!this.checkClient())
+            {
+                return Unauthorized();
+            }
             TitleIdMapping mapping = new TitleIdMapping(service, type, id);
             if (!mapping.errored)
             {
@@ -54,6 +64,27 @@ namespace hato.Controllers
                 return result;
             }
 
+        }
+        
+        private bool checkClient()
+        {
+            string userAgent = Request.Headers["User-Agent"];
+            bool usingagentcheck = allowedclients.CheckClients;
+            if (usingagentcheck)
+            {
+                foreach (string clientstr in allowedclients.AllowedClients)
+                {
+                    if (userAgent.Contains(clientstr,StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
