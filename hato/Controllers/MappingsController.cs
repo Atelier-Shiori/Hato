@@ -78,11 +78,8 @@ namespace hato.Controllers
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
                 }
+                return false;
             }
             return true;
         }
