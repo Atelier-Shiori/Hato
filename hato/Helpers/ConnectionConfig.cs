@@ -8,22 +8,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace hato.Helpers
 {
     public class ConnectionConfig
     {
         // Specify database settings
-        // Note: You should execute setupschema.sql before setting up this script.
-        private const String mysqlserver = "localhost";
-		private const String mysqldatabase = "hato";
-		private const String mysqlusername = "hato";
-		private const String mysqlpassword = "";
 
         // Do not modify anything below this line.
 		public static String connectionstring ()
 		{
-			return "SERVER =" + mysqlserver + ";DATABASE=" + mysqldatabase + ";UID=" + mysqlusername + ";PASSWORD=" + mysqlpassword + ";";
-		}
+            //dbsettings settings = settings.Values;
+            //return "SERVER =" + settings.dbhost + ";DATABASE=" + settings.dbname + ";UID=" + settings.dbuser + ";PASSWORD=" + settings.dbpassword + ";";
+            return "";
+        }
     }
 }

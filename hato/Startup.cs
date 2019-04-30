@@ -42,6 +42,7 @@ namespace hato
        .AddJsonFormatters();
             services.AddOptions();
             services.Configure<UserAgentControl>(Configuration.GetSection("UserAgentControl"));
+            services.Configure<dbsettings>(options => Configuration.GetSection("dbsettings").Bind(options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

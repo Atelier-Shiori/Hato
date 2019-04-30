@@ -20,10 +20,10 @@ namespace hato.Helpers
         public bool errored;
         public bool notfound;
         private TitleIDConverter converter;
-        public TitleIdMapping(string service, string type, string id)
+        public TitleIdMapping(string service, string type, string id, dbsettings dsettings)
         {
-            converter = new TitleIDConverter();
-            if (converter.sqlliteinitalized)
+            converter = new TitleIDConverter(dsettings);
+            if (converter.initalized)
             {
                 switch (type)
                 {

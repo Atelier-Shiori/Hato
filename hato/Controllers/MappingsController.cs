@@ -21,10 +21,12 @@ namespace hato.Controllers
     public class MappingsController : ControllerBase
     {
         private readonly UserAgentControl allowedclients;
+        private readonly dbsettings dbsettings;
 
-        public MappingsController(IOptions<UserAgentControl> allowedclients)
+        public MappingsController(IOptions<UserAgentControl> allowedclients, IOptions<dbsettings> settings)
         {
             this.allowedclients = allowedclients.Value;
+            this.dbsettings = settings.Value;
         }
         // GET api/mappings/(service)/(type)/(id)
         [HttpGet("{service}/{type}/{id}")]
@@ -34,7 +36,7 @@ namespace hato.Controllers
             {
                 return Unauthorized();
             }
-            TitleIdMapping mapping = new TitleIdMapping(service, type, id);
+            TitleIdMapping mapping = new TitleIdMapping(service, type, id, this.dbsettings);
             if (!mapping.errored)
             {
                 mapping.performLookup();
