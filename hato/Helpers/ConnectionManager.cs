@@ -24,6 +24,7 @@ namespace hato.Helpers
                     break;
                 case "postgres":
                     connectionString = "SERVER=" + this.settings.dbhost + ";User Id=" + this.settings.dbuser + ";Password=" + this.settings.dbpassword + ";Database=" + this.settings.dbname;
+                    postgresdbmgr = new PostgresDBManager(connectionString);
                     break;
                 default:
                     throw new System.ArgumentException("Invalid engine type" + this.settings.dbengine);
@@ -38,6 +39,7 @@ namespace hato.Helpers
                     mysqldbmgr.Dispose();
                     break;
                 case "postgres":
+                    postgresdbmgr.Dispose();
                     break;
             }
         }
@@ -49,7 +51,7 @@ namespace hato.Helpers
                 case "mysql":
                     return mysqldbmgr.initalized;
                 case "postgres":
-                    return false;
+                    return postgresdbmgr.initalized;
             }
             return false;
         }
@@ -60,6 +62,8 @@ namespace hato.Helpers
             {
                 case "mysql":
                     return mysqldbmgr.RetreiveSavedIDsFromServiceID(listService, titleid, type);
+                case "postgres":
+                    return postgresdbmgr.RetreiveSavedIDsFromServiceID(listService, titleid, type);
             }
             return null;
         }
@@ -70,6 +74,8 @@ namespace hato.Helpers
             {
                 case "mysql":
                     return mysqldbmgr.RetreiveSavedTargetIDFromServiceID(targetservice, listService, titleid, type);
+                case "postgres":
+                    return postgresdbmgr.RetreiveSavedTargetIDFromServiceID(targetservice, listService, titleid, type);
             }
             return null;
         }
@@ -81,6 +87,9 @@ namespace hato.Helpers
                 case "mysql": 
                     mysqldbmgr.SaveIDtoDatabase(targetservice, listservice, targettitleid, servicetitleid, type);
                     break;
+                case "postgres":
+                    postgresdbmgr.SaveIDtoDatabase(targetservice, listservice, targettitleid, servicetitleid, type);
+                    break;
             }
         }
 
@@ -90,6 +99,8 @@ namespace hato.Helpers
             {
                 case "mysql":
                     return mysqldbmgr.CheckIfEntryExists(targetservice, targetid, type);
+                case "postgres":
+                    return postgresdbmgr.CheckIfEntryExists(targetservice, targetid, type);
             }
             return null;
         }
@@ -100,6 +111,8 @@ namespace hato.Helpers
             {
                 case "mysql":
                     return mysqldbmgr.CheckIfEntryExists(targetservice, targetid, sourceservice, sourceid, type);
+                case "postgres":
+                    return postgresdbmgr.CheckIfEntryExists(targetservice, targetid, sourceservice, sourceid, type);
             }
             return null;
         }
