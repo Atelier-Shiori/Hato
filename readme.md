@@ -69,15 +69,15 @@ POST https://hato.malupdaterosx.moe/api/mappings/mappings
 ```
 #### Parameters
 
-| Parameter | Value | Required |
-|:---|:---|:---|
-| body |(JSON body input. See example for format) ``` (JSON body input. See example for format) 
+##### Body
+Content Type: application/json
+```
 {
 "media_type" : "anime",
 "service" : "mal",
-"title_ids" : [1, 31080, 37786]
+"title_ids" : [1, 31080, 37786, 25835, 21681, 24705, 22147, 20509, 10928, 19815]
 }
-```| `true` |
+```
 
 #### Example
 ```
@@ -90,7 +90,7 @@ Content Type: application/json
 {
 "media_type" : "anime",
 "service" : "mal",
-"title_ids" : [1, 31080, 37786]
+"title_ids" : [1, 31080, 37786, 25835, 21681, 24705, 22147, 20509, 10928, 19815]
 }
 ```
 
