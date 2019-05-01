@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* MySQLDBManager.cs
+ * This class contains methods to interface with the MySQL/MariaDB DBMS.
+ * 
+ * Copyright (c) 2018-2019 MAL Updater OS X Group, a division of Moy IT Solutions
+ * Licensed under Apache License 2.0
+ */
+using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 

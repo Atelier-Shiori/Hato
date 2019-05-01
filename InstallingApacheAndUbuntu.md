@@ -60,8 +60,9 @@ exit;
 
 ### Create the Database Configuration file
 ```
-cd /var/www/hato/hato/Helpers
-cp ConnectionConfig-samplecs ConnectionConfig.cs
+cd /var/www/hato/hato/
+mv appsettings-sample.json appsettings.json 
+mv appsettings.Development-sample.json appsettings.Development.json
 nano ConnectionConfig.cs
 ```
 

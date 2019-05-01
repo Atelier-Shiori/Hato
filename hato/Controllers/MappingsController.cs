@@ -108,11 +108,13 @@ namespace hato.Controllers
                     }
                     else
                     {
+                        mapping.Dispose();
                         tmpmappings.Add(mapping.generatemapdictionary());
                     }
                 }
                 else
                 {
+                    mapping.Dispose();
                     return BadRequest(new Dictionary<string, object> { { "data", null }, { "error", "Unable to connect to database." } });
                 } 
             }
