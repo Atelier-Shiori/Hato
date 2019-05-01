@@ -3,13 +3,13 @@ import requests
 import time
 
 instance = "http://localhost:50420"
-filename = "Filename:" sys.argv[1]
-site = "Site Source:" sys.argv[2]
-mediatype = "Media Type" + sys.argv[3]
+filename = sys.argv[1]
+site = sys.argv[2]
+mediatype = sys.argv[3]
 
-print(filename)
-print(mediatype)
-print(site)
+print("Filename:" + filename)
+print("Media Type" + mediatype)
+print("Site Source:" + site)
 
 if len(filename) > 0 and (mediatype == "anime" or mediatype == "manga") and len(site) > 0:
     titleids = []

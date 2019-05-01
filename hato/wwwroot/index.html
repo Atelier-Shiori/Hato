@@ -163,8 +163,10 @@
 
             <h2>Support us</h2>
             <p>Currently, this is a free service for testing by using the form above. For use in applications, you must be an active patron to request access. You can support this project and others (Hachidori and Shukofukurou) by becoming a Patreon. Once you become a patron, you can request access to this production instance.</p>
-            <p><a href="https://www.patreon.com/bePatron?u=4748653" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
-            <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script></p>
+            <p>
+                <a href="https://www.patreon.com/bePatron?u=4748653" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+                <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+            </p>
             <h2>Try it Out</h2>
             <p>
 
@@ -216,6 +218,7 @@
             <h2>Endpoints</h2>
             <pre><code>GET https://hato.malupdaterosx.moe/api/mappings/(service)/(media type)/(id)
 		</code></pre>
+            <p>Retreives a single title id mapping.</p>
             <h3>Parameters</h3>
             <table>
                 <thead>
@@ -249,6 +252,145 @@
             <h4>Response</h4>
             <pre><code>
     {"data":{"anilist_id":21238,"kitsu_id":11134,"mal_id":31080,"type":0,"type_str":"anime"}}
+</code></pre>
+            <pre><code>
+    POST https://hato.malupdaterosx.moe/api/mappings/mappings
+</code></pre>
+            <h3>Parameters</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">Parameter</th>
+                        <th align="left">Value</th>
+                        <th align="left">Required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="left">body</td>
+                        <td align="left">
+                            (JSON body input. See example for format) <pre><code>
+    {
+    "media_type" : "anime",
+    "service" : "mal",
+    "title_ids" : [1, 31080, 37786]
+    }
+</code></pre>
+                        </td>
+                        <td align="left"><code>true</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Example</h3>
+            <pre><code>
+    [POST] http://hato.malupdaterosx.moe/api/mappings/mappings
+</code></pre>
+            <p>Retreives multiple title id mappings (10 max).</p>
+            <h4>Request Body</h4>
+            <pre><code>
+    {
+    "media_type" : "anime",
+    "service" : "mal",
+    "title_ids" : [1, 31080, 37786, 25835, 21681, 24705, 22147, 20509, 10928, 19815]
+    }
+</code></pre>
+            <h4>Response</h4>
+            <pre><code>
+    {
+    "data": [
+    {
+    "anidb_id": 23,
+    "anilist_id": 1,
+    "kitsu_id": 1,
+    "mal_id": 1,
+    "notify_id": "Tk3ccKimg",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 11321,
+    "anilist_id": 21238,
+    "kitsu_id": 11134,
+    "mal_id": 31080,
+    "notify_id": "090XtKimg",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": null,
+    "anilist_id": 101573,
+    "kitsu_id": 41240,
+    "mal_id": 37786,
+    "notify_id": "ytl6tj7mg",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 10779,
+    "anilist_id": 20812,
+    "kitsu_id": 8698,
+    "mal_id": 25835,
+    "notify_id": "jlx1pFmiR",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 10351,
+    "anilist_id": 20575,
+    "kitsu_id": 8138,
+    "mal_id": 21681,
+    "notify_id": "ylgTtFmmg",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 10323,
+    "anilist_id": 20565,
+    "kitsu_id": 8710,
+    "mal_id": 24705,
+    "notify_id": "2SLJtFiiR",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 10399,
+    "anilist_id": 20602,
+    "kitsu_id": 8259,
+    "mal_id": 22147,
+    "notify_id": "ua1opKmmR",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 10091,
+    "anilist_id": 20467,
+    "kitsu_id": 8003,
+    "mal_id": 20509,
+    "notify_id": "sThhpFiiR",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 9155,
+    "anilist_id": 10928,
+    "kitsu_id": 6410,
+    "mal_id": 10928,
+    "notify_id": "qqgStKmiR",
+    "type": 0,
+    "type_str": "anime"
+    },
+    {
+    "anidb_id": 9998,
+    "anilist_id": 19815,
+    "kitsu_id": 7880,
+    "mal_id": 19815,
+    "notify_id": "cErppFmiR",
+    "type": 0,
+    "type_str": "anime"
+    }
+    ],
+    "failed_list": []
+    }
 </code></pre>
             <h1>License</h1>
             <p>Hato is licensed under Apache License 2.0</p>

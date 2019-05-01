@@ -189,6 +189,19 @@ namespace hato.Helpers
                 errored = true;
             }
         }
+        public Dictionary<string, object> generatemapdictionary()
+        {
+            Dictionary<string, object> titleidlist;
+            if (mediatype == MediaType.Anime)
+            {
+                titleidlist = new Dictionary<string, object> { { "anidb_id", anidb_id > 0 ? anidb_id : (int?)null }, { "anilist_id", anilist_id > 0 ? anilist_id : (int?)null }, { "kitsu_id", kitsu_id > 0 ? kitsu_id : (int?)null }, { "mal_id", (mal_id > 0) ? mal_id : (int?)null }, { "notify_id", notify_id.Length > 0 ? notify_id : null }, { "type", mediatype }, { "type_str", "anime" } };
+            }
+            else
+            {
+                titleidlist = new Dictionary<string, object> { { "anilist_id", anilist_id > 0 ? anilist_id : (int?)null }, { "kitsu_id", kitsu_id > 0 ? kitsu_id : (int?)null }, { "mal_id", (mal_id > 0) ? mal_id : (int?)null }, { "type", mediatype }, { "type_str", "manga" } };
+            }
+            return titleidlist;
+        }
         private Dictionary<string, object> generateDictionary()
         {
             Dictionary<string, object> titleidlist;
