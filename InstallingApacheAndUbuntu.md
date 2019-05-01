@@ -67,13 +67,16 @@ nano ConnectionConfig.cs
 ```
 
 You should only modify the following as seen below. You should only need to add the generated password to mysqlpassword constant.
+
+Note: Supported DBMS engines are mysql or postgres (lower case only).
 ```
-// Specify database settings
-// Note: You should execute setupschema.sql before setting up this script.
-private const String mysqlserver = "localhost";
-private const String mysqldatabase = "hato";
-private const String mysqlusername = "hato";
-private const String mysqlpassword = "";
+"dbsettings" : {
+"dbengine" : "mysql",
+"dbhost" : "localhost",
+"dbname" : "hato",
+"dbuser" : "hato",
+"dbpassword" : ""
+}
 ```
 
 ## 4. Publish the app
