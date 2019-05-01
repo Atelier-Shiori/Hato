@@ -63,6 +63,135 @@ GET http://hato.malupdaterosx.moe/api/mappings/(service)/(media type)/(id)
     }
 }
 ```
+
+```
+POST https://hato.malupdaterosx.moe/api/mappings/mappings
+```
+#### Parameters
+
+| Parameter | Value | Required |
+|:---|:---|:---|
+| body |(JSON body input. See example for format) ``` (JSON body input. See example for format) 
+{
+"media_type" : "anime",
+"service" : "mal",
+"title_ids" : [1, 31080, 37786]
+}
+```| `true` |
+
+#### Example
+```
+[GET] http://hato.malupdaterosx.moe/api/mappings/kitsu/anime/11134
+```
+
+##### Request Body
+Content Type: application/json
+```
+{
+"media_type" : "anime",
+"service" : "mal",
+"title_ids" : [1, 31080, 37786]
+}
+```
+
+##### Response
+```
+{
+"data": [
+{
+"anidb_id": 23,
+"anilist_id": 1,
+"kitsu_id": 1,
+"mal_id": 1,
+"notify_id": "Tk3ccKimg",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 11321,
+"anilist_id": 21238,
+"kitsu_id": 11134,
+"mal_id": 31080,
+"notify_id": "090XtKimg",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": null,
+"anilist_id": 101573,
+"kitsu_id": 41240,
+"mal_id": 37786,
+"notify_id": "ytl6tj7mg",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 10779,
+"anilist_id": 20812,
+"kitsu_id": 8698,
+"mal_id": 25835,
+"notify_id": "jlx1pFmiR",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 10351,
+"anilist_id": 20575,
+"kitsu_id": 8138,
+"mal_id": 21681,
+"notify_id": "ylgTtFmmg",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 10323,
+"anilist_id": 20565,
+"kitsu_id": 8710,
+"mal_id": 24705,
+"notify_id": "2SLJtFiiR",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 10399,
+"anilist_id": 20602,
+"kitsu_id": 8259,
+"mal_id": 22147,
+"notify_id": "ua1opKmmR",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 10091,
+"anilist_id": 20467,
+"kitsu_id": 8003,
+"mal_id": 20509,
+"notify_id": "sThhpFiiR",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 9155,
+"anilist_id": 10928,
+"kitsu_id": 6410,
+"mal_id": 10928,
+"notify_id": "qqgStKmiR",
+"type": 0,
+"type_str": "anime"
+},
+{
+"anidb_id": 9998,
+"anilist_id": 19815,
+"kitsu_id": 7880,
+"mal_id": 19815,
+"notify_id": "cErppFmiR",
+"type": 0,
+"type_str": "anime"
+}
+],
+"failed_list": []
+}
+```
 ## How to install
 The instructions are in beta, to be changed in the future.
 
