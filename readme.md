@@ -1,4 +1,6 @@
 # Hato
+## Notice: Do not report mapping errors in the issue. Please use [this form](https://forms.office.com/Pages/ResponsePage.aspx?id=foLJ9a3qM0GhTLPBKYvjoJQLJAD3OI1Mi_kkp4Law6BUOFo0V0oyOU8xMjVQUlhMS09VTk1DVkJESS4u) instead.
+
 Hato (鳩 lit. Pigeon) is a REST API built on ASP.NET Core and written in C#. It allows developers to easily look up title identifiers for a certain title and media type (Anime or Manga) on different listing services to increase interoperability for things like exporting lists, list syncing and updating entries on different services of the same title. The mappings are stored in a database so that title id mappings can be retrieved quickly without performing another lookup.
 
 ## Why Hato over ARM ([Anime Relations Mapper](https://github.com/p-chan/arm))?
