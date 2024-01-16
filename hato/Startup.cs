@@ -38,7 +38,7 @@ namespace hato
        {
             //options.RequireHttpsPermanent = true; 
             options.RespectBrowserAcceptHeader = true;
-            options.EnableEndpointRouting = true;
+            options.EnableEndpointRouting = false;
        })
        .AddFormatterMappings()
        .AddNewtonsoftJson();
