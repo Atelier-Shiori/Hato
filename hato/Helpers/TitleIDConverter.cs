@@ -44,7 +44,7 @@ namespace hato.Helpers
             raclient = new RestClient("https://graphql.anilist.co");
             rkclient = new RestClient("https://kitsu.io/api/edge");
             rmoeclient = new RestClient("https://notify.moe/");
-            rmoeclient.FollowRedirects = false;
+            //rmoeclient.FollowRedirects = false;
             this.connmanager = new ConnectionManager(dsettings);
             this.initalized = connmanager.isInitalized();
         }
@@ -76,8 +76,8 @@ namespace hato.Helpers
             }
             else
             {
-                RestRequest request = new RestRequest("/api/anime/" + notifymoeid, Method.GET);
-                IRestResponse response = rmoeclient.Execute(request);
+                RestRequest request = new RestRequest("/api/anime/" + notifymoeid, Method.Get);
+                RestResponse response = rmoeclient.Execute(request);
                 if (response.StatusCode.GetHashCode() == 200)
                 {
                     Dictionary<string, object> jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
@@ -170,8 +170,8 @@ namespace hato.Helpers
             }
             else if (notifyid is int)
             {
-                RestRequest request = new RestRequest(retrieveServiceName(listservice) + "/anime/" + titleid.ToString() , Method.GET);
-                IRestResponse response = rmoeclient.Execute(request);
+                RestRequest request = new RestRequest(retrieveServiceName(listservice) + "/anime/" + titleid.ToString() , Method.Get);
+                RestResponse response = rmoeclient.Execute(request);
                 if (response.StatusCode.GetHashCode() == 302)
                 {
                     string redirectedurl = response.Headers.ToList().Find(x => x.Name == "Location").Value.ToString();
@@ -213,11 +213,11 @@ namespace hato.Helpers
 
             String filterstr = "myanimelist/" + typestr;
    
-            RestRequest request = new RestRequest( "/" + typestr + "/" + kitsuid.ToString() + "?include=mappings&fields[anime]=id", Method.GET);
+            RestRequest request = new RestRequest( "/" + typestr + "/" + kitsuid.ToString() + "?include=mappings&fields[anime]=id", Method.Get);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Accept", "application/vnd.api+json");
 
-            IRestResponse response = rkclient.Execute(request);
+            RestResponse response = rkclient.Execute(request);
             Thread.Sleep(1000);
             if (response.StatusCode.GetHashCode() == 200)
             {
@@ -266,11 +266,11 @@ namespace hato.Helpers
 
             String filterstr = "myanimelist/" + typestr;
 
-            RestRequest request = new RestRequest("/mappings?filter[externalSite]=myanimelist/" + typestr + "&filter[external_id]=" + malid.ToString() , Method.GET);
+            RestRequest request = new RestRequest("/mappings?filter[externalSite]=myanimelist/" + typestr + "&filter[external_id]=" + malid.ToString() , Method.Get);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Accept", "application/vnd.api+json");
 
-            IRestResponse response = rkclient.Execute(request);
+            RestResponse response = rkclient.Execute(request);
             if (response.StatusCode.GetHashCode() == 200)
             {
                 Dictionary<string, object> jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
@@ -338,13 +338,13 @@ namespace hato.Helpers
                     break;
             }
 
-            RestRequest request = new RestRequest("/", Method.POST);
+            RestRequest request = new RestRequest("/", Method.Post);
             request.RequestFormat = DataFormat.Json;
             GraphQLQuery gquery = new GraphQLQuery();
             gquery.query = "query ($id: Int!, $type: MediaType) {\n  Media(id: $id, type: $type) {\n    id\n    idMal\n  }\n}";
             gquery.variables = new Dictionary<string, object> { { "id" , anilistid.ToString() }, { "type", typestr } };
             request.AddJsonBody(gquery);
-            IRestResponse response = raclient.Execute(request);
+            RestResponse response = raclient.Execute(request);
             if (response.StatusCode.GetHashCode() == 200)
             {
                 Dictionary<string, object> jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
@@ -387,13 +387,13 @@ namespace hato.Helpers
                     break;
             }
 
-            RestRequest request = new RestRequest("/", Method.POST);
+            RestRequest request = new RestRequest("/", Method.Post);
             request.RequestFormat = DataFormat.Json;
             GraphQLQuery gquery = new GraphQLQuery();
             gquery.query = "query ($id: Int!, $type: MediaType) {\n  Media(idMal: $id, type: $type) {\n    id\n    idMal\n  }\n}";
             gquery.variables = new Dictionary<string, object> { { "id", malid.ToString() }, { "type", typestr } };
             request.AddJsonBody(gquery);
-            IRestResponse response = raclient.Execute(request);
+            RestResponse response = raclient.Execute(request);
             if (response.StatusCode.GetHashCode() == 200)
             {
                 Dictionary<string, object> jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
