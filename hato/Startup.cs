@@ -37,7 +37,8 @@ namespace hato
             services.AddMvcCore(options =>
        {
             //options.RequireHttpsPermanent = true; 
-            options.RespectBrowserAcceptHeader = true; 
+            options.RespectBrowserAcceptHeader = true;
+            options.EnableEndpointRouting = true;
        })
        .AddFormatterMappings()
        .AddNewtonsoftJson();
