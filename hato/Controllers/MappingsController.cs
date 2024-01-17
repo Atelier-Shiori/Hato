@@ -44,7 +44,7 @@ namespace hato.Controllers
         }
         // GET api/mappings/(service)/(type)/(id)
         [HttpGet("{service}/{type}/{id}")]
-        public ActionResult<JsonResult> Get(string service, string type, string id)
+        public IActionResult Get(string service, string type, string id)
         {
             if (!this.checkClient())
             {
@@ -83,7 +83,7 @@ namespace hato.Controllers
         }
 
         [HttpPost("mappings")]
-        public ActionResult<JsonResult> Post([FromBody] mappingsrequest mappings)
+        public ActionResult Post([FromBody] mappingsrequest mappings)
         {
             if (!this.checkClient())
             {
